@@ -1,0 +1,180 @@
+{% extends "owner/index.html" %}
+{%block base%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Travell Buddy</title>
+  <link href="/static/img/favicon.png" rel="icon">
+  <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="/static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <section id="about" class="about">
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="content col-xl-5 d-flex align-items-stretch" data-aos="fade-up">
+          <div class="content">
+            <h3>Enter Trip Details</h3>
+          </div>
+        </div>
+        <div class="col-xl-7 d-flex align-items-stretch">
+          <form method="POST">
+            {%csrf_token%}
+          <div class="icon-boxes d-flex flex-column justify-content-center">
+            <div class="row">
+              <!-- Existing Fields -->
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                <i class='bx bx-location-plus'></i>
+                <h4>Trip Start Location</h4>
+                <input type="text" class="form-control" name="tripStart" id="tripStart" placeholder="Enter start location" required>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                <i class='bx bxs-location-plus'></i>
+                <h4>Trip End Location</h4>
+                <input type="text" class="form-control" name="tripEnd" id="tripEnd" placeholder="Enter end location" required>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                <i class='bx bx-calendar'></i>
+                <h4>Trip Date</h4>
+                <input type="date" class="form-control" name="tripDate" id="tripDate"required>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
+                <i class="bx bxs-watch"></i>
+                <h4>Trip Time</h4>
+                <input type="time" class="form-control" name="tripTime" id="tripTime"required>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="500">
+                <i class="bx bx-car"></i>
+                <h4>Type of Vehicle You Own</h4>
+                <input type="text" class="form-control" name="vehicleType" id="vehicleType" placeholder="Enter vehicle type"required>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="600">
+                <i class="bx bx-group"></i>
+                <h4>Number of Companions</h4>
+                <input type="number" class="form-control" name="companions" id="companions" placeholder="Enter number of companions"required>
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="700">
+                <i class="bx bx-book"></i>
+                <h4>Reason for Your Trip</h4>
+                <input type="text" class="form-control" name="tripReason" id="tripReason" placeholder="Enter reason for trip"required>
+              </div>
+  
+              <!-- Preferred Companion Section -->
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="800">
+                <i class="bx bx-user"></i>
+                <h4>Preferred Companion</h4>
+                <div>
+                  <input type="radio" id="gender" name="preferredCompanion" value="male">
+                  <label for="male">Male</label>
+                </div>
+                <div>
+                  <input type="radio" id="gender" name="preferredCompanion" value="female">
+                  <label for="female">Female</label>
+                </div>
+                <div>
+                  <input type="radio" id="gender" name="preferredCompanion" value="random">
+                  <label for="random">Random</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-start" data-aos="fade-up" data-aos-delay="900">
+                <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
+              </div>
+            </div>
+          </div><!-- End .content-->
+        </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Validation Modal -->
+ <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="validationModalLabel">Opz you missed some steps</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please fill in all the fields.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acknowledgment Modal -->
+<div class="modal fade" id="ackModal" tabindex="-1" aria-labelledby="ackModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ackModalLabel">Trip Submitted</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Your trip details have been submitted successfully.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  
+  function submitForm() {
+    var tripStart = document.getElementById('tripStart').value;
+    var tripEnd = document.getElementById('tripEnd').value;
+    var tripDate = document.getElementById('tripDate').value;
+    var tripTime = document.getElementById('tripTime').value;
+    var vehicleType = document.getElementById('vehicleType').value;
+    var companions = document.getElementById('companions').value;
+    var tripReason = document.getElementById('tripReason').value;
+    var preferredCompanion = document.querySelector('input[name="preferredCompanion"]:checked');
+    
+    if (!tripStart || !tripEnd || !tripDate || !tripTime || !vehicleType || !companions || !tripReason || !preferredCompanion) {
+      $('#validationModal').modal('show');
+    } else {
+      $('#ackModal').modal('show');
+    }
+  } 
+</script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/static/vendor/aos/aos.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/js/main.js"></script> 
+
+</body>
+
+</html>
+{% endblock %}

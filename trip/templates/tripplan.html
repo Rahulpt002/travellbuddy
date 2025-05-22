@@ -1,0 +1,142 @@
+<html>
+    <body>
+<section id="about" class="about">
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="content col-xl-5 d-flex align-items-stretch" data-aos="fade-up">
+          <div class="content">
+            <h3>Enter Trip Details</h3>
+          </div>
+        </div>
+        <div class="col-xl-7 d-flex align-items-stretch">
+          <form method="POST">
+          <div class="icon-boxes d-flex flex-column justify-content-center">
+            <div class="row">
+              <!-- Existing Fields -->
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                <i class='bx bx-location-plus'></i>
+                <h4>Trip Start Location</h4>
+                <input type="text" class="form-control" id="tripStart" placeholder="Enter start location">
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                <i class='bx bxs-location-plus'></i>
+                <h4>Trip End Location</h4>
+                <input type="text" class="form-control" id="tripEnd" placeholder="Enter end location">
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                <i class='bx bx-calendar'></i>
+                <h4>Trip Date</h4>
+                <input type="date" class="form-control" id="tripDate">
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
+                <i class="bx bxs-watch"></i>
+                <h4>Trip Time</h4>
+                <input type="time" class="form-control" id="tripTime">
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="500">
+                <i class="bx bx-car"></i>
+                <h4>Type of Vehicle You Own</h4>
+                <input type="text" class="form-control" id="vehicleType" placeholder="Enter vehicle type">
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="600">
+                <i class="bx bx-group"></i>
+                <h4>Number of Companions</h4>
+                <input type="number" class="form-control" id="companions" placeholder="Enter number of companions">
+              </div>
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="700">
+                <i class="bx bx-book"></i>
+                <h4>Reason for Your Trip</h4>
+                <input type="text" class="form-control" id="tripReason" placeholder="Enter reason for trip">
+              </div>
+  
+              <!-- Preferred Companion Section -->
+              <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="800">
+                <i class="bx bx-user"></i>
+                <h4>Preferred Companion</h4>
+                <div>
+                  <input type="radio" id="gender" name="preferredCompanion" value="male">
+                  <label for="male">Male</label>
+                </div>
+                <div>
+                  <input type="radio" id="gender" name="preferredCompanion" value="female">
+                  <label for="female">Female</label>
+                </div>
+                <div>
+                  <input type="radio" id="gender" name="preferredCompanion" value="random">
+                  <label for="random">Random</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-start" data-aos="fade-up" data-aos-delay="900">
+                <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+              </div>
+            </div>
+          </div><!-- End .content-->
+        </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Validation Modal -->
+ <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="validationModalLabel">Opz you missed some steps</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Please fill in all the fields.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acknowledgment Modal -->
+<div class="modal fade" id="ackModal" tabindex="-1" aria-labelledby="ackModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ackModalLabel">Trip Submitted</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Your trip details have been submitted successfully.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+  function submitForm() {
+    var tripStart = document.getElementById('tripStart').value;
+    var tripEnd = document.getElementById('tripEnd').value;
+    var tripDate = document.getElementById('tripDate').value;
+    var tripTime = document.getElementById('tripTime').value;
+    var vehicleType = document.getElementById('vehicleType').value;
+    var companions = document.getElementById('companions').value;
+    var tripReason = document.getElementById('tripReason').value;
+    var preferredCompanion = document.querySelector('input[name="preferredCompanion"]:checked');
+    
+    if (!tripStart || !tripEnd || !tripDate || !tripTime || !vehicleType || !companions || !tripReason || !preferredCompanion) {
+      $('#validationModal').modal('show');
+    } else {
+      $('#ackModal').modal('show');
+    }
+  }
+</script>
+</body>
+</html>

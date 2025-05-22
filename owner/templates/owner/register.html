@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #e0e0e0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+        }
+        h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            font-size: 14px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"], input[type="file"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #03a9f4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+        .btn:hover {
+            background: #0288d1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3>Registration Form</h3>
+    <form name="registration" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="text" name="user_id" placeholder="User ID" required>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+        <input type="tel" name="phone_number" placeholder="Phone Number" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="address" placeholder="Address" rows="3" required></textarea>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="aadhar_number" placeholder="Aadhaar Number" required>
+        <label>Upload Photo:</label>
+        <input type="file" name="photo" accept="image/*" required>
+        <label>Upload Aadhaar Photo:</label>
+        <input type="file" name="aadhar_photo" accept="image/*" required>
+        <select name="gender" required>
+            <option value="" disabled selected>Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <input type="text" name="profession" placeholder="Profession" required>
+        <button type="submit" class="btn">Register</button>
+        
+    </form>
+</div>
+
+</body>
+</html>

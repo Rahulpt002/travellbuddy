@@ -1,0 +1,116 @@
+{% extends "owner/index.html" %}
+{% block base1 %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Travell Buddy</title>
+  <link href="/static/img/favicon.png" rel="icon">
+  <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="/static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<section id="services" class="services">
+    <div class="container">
+
+        <!-- Search Section -->
+        <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+            <h2>Find a ride</h2>
+            <p>Don't have a vehicle to travel? Don't worry, we got you covered.</p>
+        </div>
+
+        <!-- Search Form -->
+        <form method="POST" action="/findride/#services" class="search-form mb-5">
+            {% csrf_token %}
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="from_location" placeholder="From" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="to_location" placeholder="To" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" name="trip_date" placeholder="Select Date" required>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="preferred_companion">
+                        <option value="random">Any Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-2 text-center">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Search Results Section -->
+        <div id="search-results" class="row">
+            {% if message %}
+                <div class="col-12 alert alert-info">{{ message }}</div>
+            {% endif %}
+            {% if trips %}
+                {% for trip in trips %}
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5">
+                    <div class="icon-box" data-aos="fade-up">
+                        <div class="icon"><i class="bx bx-car"></i></div>
+                        <h4 class="title">
+                            <a href="#">{{ trip.start_location }} to {{ trip.end_location }}</a>
+                        </h4>
+                        <p class="description">Date: {{ trip.trip_date }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <p>No trips available.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if msg == 'ok' %}
+            alert("Completed");
+        {% endif %}
+        {% if message %}
+            alert("{{ message }}");
+        {% endif %}
+        {% if error %}
+            alert("{{ error }}");
+        {% endif %}
+    });
+</script>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="/static/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="/static/vendor/aos/aos.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/static/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="/static/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/static/js/main.js"></script> 
+
+</body>
+
+
+
+</html>
+{% endblock %}
